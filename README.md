@@ -18,36 +18,9 @@ This repository presents an industrial-grade Computer Vision application for aut
 
 The system addresses the core challenge of invariant landmark identification under realistic tourist imaging conditions: scale changes, 2D in-plane and 3D out-of-plane rotations, illumination attenuation, occlusions, and non-database landmark rejection.
 
-```
-+---------------------------------------------------------------------------------------------------+
-|                                  LANDMARK RECOGNITION PIPELINE                                    |
-+---------------------------------------------------------------------------------------------------+
-|  [Query Image]                                                                                    |
-|       |                                                                                           |
-|       v                                                                                           |
-|  [Grayscale Conversion & SIFT Detection] ---> (Keypoints: Location, Scale sigma, Angle theta)     |
-|       |                                  ---> (128-D Descriptors)                                 |
-|       v                                                                                           |
-|  [Brute-Force Matcher (L2 Norm)]                                                                  |
-|       |                                                                                           |
-|       v                                                                                           |
-|  [k-NN Matching (k=2) + Lowe's Ratio Test (0.75)] ---> Filter Ambiguous / Repeated Features       |
-|       |                                                                                           |
-|       v                                                                                           |
-|  [Candidate Scoring & Rejection Gate]                                                             |
-|       |---> Match Count < 20 or Ambiguous Margin? ---> [REJECT / UNKNOWN LANDMARK]                |
-|       |                                                                                           |
-|       v (Passed)                                                                                  |
-|  [RANSAC Homography Estimation (cv2.findHomography)]                                              |
-|       |                                                                                           |
-|       v                                                                                           |
-|  [Geometric Verification: det(H) > 0, Inliers >= 12, Convexity Check, Area Bounds]                |
-|       |---> Fails Verification? ---> [WARNING: GEOMETRY UNRELIABLE]                               |
-|       |                                                                                           |
-|       v (Verified)                                                                                |
-|  [Project 4 Reference Corners onto Query & Render Telemetry HUD]                                  |
-+---------------------------------------------------------------------------------------------------+
-```
+<p align="center">
+  <img src="figures/pipeline_architecture.png" alt="Landmark Recognition Pipeline Architecture" width="100%" />
+</p>
 
 ---
 
